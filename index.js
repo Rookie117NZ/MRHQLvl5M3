@@ -30,7 +30,8 @@ server.delete('/Cars/D', (req, res) => {
     CarModelYear.push(model, year)
     res.send('Model and Year deleted')
 }) 
-
+//Split these into separate JSON/Arrays, have them both run thru the calculation function
+//Run both back thru the Array-ifying/JSON-ifying process then connect to API somehow
 const CarModelYear = [  
     { model: "Civic", year: 2014 }, //Value = 6614
     { model: "Spyder", year: 2002 }, //Value = 10702
