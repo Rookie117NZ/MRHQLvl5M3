@@ -17,25 +17,28 @@ server.get('/Cars', (req, res) => {
     res.send(CarModelYear)
 })
 
-//server.post('/Cars/Add', (req, res) => {
-//    const model = req.body.model
-//    const year = req.body.year
-//    CarModelYear.push(model, year)
-//    res.send('Model and Year added')
-//}) 
-//
-//server.delete('/Cars/D', (req, res) => {
-//    const model = req.body.model
-//    const year = req.body.year
-//    CarModelYear.push(model, year)
-//    res.send('Model and Year deleted')
-//}) 
-//
+server.post('/Cars/Add', (req, res) => {
+    const model = req.body.model
+    const year = req.body.year
+    CarModelYear.push(model, year)
+    res.send('Model and Year added')
+}) 
+
+server.delete('/Cars/D', (req, res) => {
+    const model = req.body.model
+    const year = req.body.year
+    CarModelYear.push(model, year)
+    res.send('Model and Year deleted')
+}) 
+
 const CarModelYear = [  
-    { model: "Civic", year: 2014 },
-    { model: "Spyder", year: 2002 },
-    { model: "Optima", year: 2012 }
-];
+    { model: "Civic", year: 2014 }, //Value = 6614
+    { model: "Spyder", year: 2002 }, //Value = 10702
+    { model: "Optima", year: 2012 }, //Value = 9412
+    { model: "911", year: 2020 }, //Value = 420
+    { model: "Task-Force", year: -987 }, //Value = ERROR, undefined
+    { model: "C200", year: 'twenty twenty' } //Value = ERROR, undefined
+  ];
 
 const sumChars = (newValues, carYear) => {
 let myNumber = newValues.replace("", "");
@@ -52,5 +55,9 @@ let i,
       return console.log("ERROR");
     }
   };
-  console.log(sumChars(CarModelYear[0].model, CarModelYear[0].year));
-
+  console.log(sumChars(CarModelYear[0].model, CarModelYear[0].year))
+  const suggestedValue = sumChars(CarModelYear[0].model, CarModelYear[0].year)
+  const suggestedValueArr = []
+  suggestedValueArr.push(suggestedValue)
+  console.log(suggestedValueArr[0])
+  console.log(`Value of a ${CarModelYear[0].year} ${CarModelYear[0].model} is ${suggestedValueArr[0]}`)
