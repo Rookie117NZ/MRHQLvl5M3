@@ -24,14 +24,40 @@ server.post('/Cars/Add', (req, res) => {
     res.send('Model and Year added')
 }) 
 
-server.delete('/Cars/D', (req, res) => {
+server.get('/Cars/Calculate', (req, res) => {
+  
+// Calculation function
+const sumChars = (newValues, carYear) => {
+  let myNumber = newValues.replace("", "");
+  let i,
+        n = myNumber.length,
+        acc = 0;
+      for (i = 0; i < n; i++) {
+        acc += parseInt(myNumber[i], 36) - 9;
+      }
+      let totalSum = acc * 100 + parseInt(carYear);
+      if (totalSum > 0) {
+        return totalSum;
+      } else {
+        return console.log("ERROR");
+      }
+    };
+  console.log(sumChars(CarModelYear[1].model, CarModelYear[1].year))
+  // Overly complicated way to chuck it into an Array and console log it
+  const suggestedValue = sumChars(CarModelYear[1].model, CarModelYear[1].year)
+  const suggestedValueArr = []
+  suggestedValueArr.push(suggestedValue)
+  console.log(suggestedValueArr)
+  res.send(`${suggestedValueArr}`)
+}) 
+
+server.delete('/Cars/Delete', (req, res) => {
     const model = req.body.model
     const year = req.body.year
     CarModelYear.push(model, year)
     res.send('Model and Year deleted')
 }) 
-//Split these into separate JSON/Arrays, have them both run thru the calculation function
-//Run both back thru the Array-ifying/JSON-ifying process then connect to API somehow
+
 const CarModelYear = [  
     { model: "Civic", year: 2014 }, //Value = 6614
     { model: "Spyder", year: 2002 }, //Value = 10702
@@ -41,24 +67,7 @@ const CarModelYear = [
     { model: "C200", year: 'twenty twenty' } //Value = ERROR, undefined
   ];
 
-const sumChars = (newValues, carYear) => {
-let myNumber = newValues.replace("", "");
-let i,
-      n = myNumber.length,
-      acc = 0;
-    for (i = 0; i < n; i++) {
-      acc += parseInt(myNumber[i], 36) - 9;
-    }
-    let totalSum = acc * 100 + parseInt(carYear);
-    if (totalSum > 0) {
-      return totalSum;
-    } else {
-      return console.log("ERROR");
-    }
-  };
-  console.log(sumChars(CarModelYear[0].model, CarModelYear[0].year))
-  const suggestedValue = sumChars(CarModelYear[0].model, CarModelYear[0].year)
-  const suggestedValueArr = []
-  suggestedValueArr.push(suggestedValue)
-  console.log(suggestedValueArr[0])
-  console.log(`Value of a ${CarModelYear[0].year} ${CarModelYear[0].model} is ${suggestedValueArr[0]}`)
+
+
+
+
