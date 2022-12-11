@@ -6,29 +6,29 @@ server.use(express.json())
 
 const PORT = process.env.PORT || 3002
 server.listen(PORT, () => {
-    console.log('Port 3002 green lighting')
+    console.log('Port 3000 green lighting')
 });
 
 server.get('/', (req, res) => {
     res.send('Greenlighting')
 })
-
+//Sends Car array in JSON
 server.get('/Cars', (req, res) => {
-    res.send(CarModelYear)
+    res.send(CarModelYear).json()
 })
 
 server.post('/Cars/Add', (req, res) => {
     const model = req.body.model
     const year = req.body.year
-    CarModelYear.push(model, year)
+    CarModelYear.push(model, year).json()
     res.send('Model and Year added')
 }) 
 
 server.get('/Cars/Calculate', (req, res) => {
   
 // Calculation function
-const sumChars = (newValues, carYear) => {
-  let myNumber = newValues.replace("", "");
+const sumChars = (carModel, carYear) => {
+  let myNumber = carModel.replace("", "");
   let i,
         n = myNumber.length,
         acc = 0;
@@ -42,21 +42,16 @@ const sumChars = (newValues, carYear) => {
         return console.log("ERROR");
       }
     };
-  console.log(sumChars(CarModelYear[1].model, CarModelYear[1].year))
-  // Overly complicated way to chuck it into an Array and console log it
-  const suggestedValue = sumChars(CarModelYear[1].model, CarModelYear[1].year)
+    module.exports = sumChars;
+  console.log(sumChars(CarModelYear[5].model, CarModelYear[5].year))
+  // Overly complicated way to chuck it into an Array, console log and then send back into JSON
+  const suggestedValue = sumChars(CarModelYear[5].model, CarModelYear[5].year)
   const suggestedValueArr = []
   suggestedValueArr.push(suggestedValue)
   console.log(suggestedValueArr)
-  res.send(`${suggestedValueArr}`)
+  res.send(suggestedValueArr).json()
 }) 
 
-server.delete('/Cars/Delete', (req, res) => {
-    const model = req.body.model
-    const year = req.body.year
-    CarModelYear.push(model, year)
-    res.send('Model and Year deleted')
-}) 
 
 const CarModelYear = [  
     { model: "Civic", year: 2014 }, //Value = 6614
@@ -68,6 +63,11 @@ const CarModelYear = [
   ];
 
 
-
+  server.delete('/Cars/Delete', (req, res) => {
+    const model = req.body.model
+        const year = req.body.year
+        CarModelYear.pop(model, year)
+        res.send('Model and Year deleted')
+    }) 
 
 
