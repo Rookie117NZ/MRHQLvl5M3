@@ -1,4 +1,4 @@
-const sumChars = require("./index.js");
+const sumChars = require("./sumChar.js");
 
 
 //Test for 2014 Civic = 6614
